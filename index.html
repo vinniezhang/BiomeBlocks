@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-us">
+	<head>
+		<!-- A-Frame VR Library -->
+		<script src="./libraries/aframe.min.js"></script>
+
+		<!-- ARToolKit for A-Frame VR Library -->
+		<script src='./libraries/aframe-ar.js'></script>
+
+		<!-- P5 libraries -->
+		<script language="javascript" type="text/javascript" src="./libraries/p5.js"></script>
+		<script language="javascript" type="text/javascript" src="./libraries/p5.dom.min.js"></script>
+        <script language='javascript' type='text/javascript' src="./libraries/p5.sound.min.js"></script>
+
+		<!-- Craig's AFrameP5 AR library -->
+		<script language="javascript" type="text/javascript" src="./libraries/aframep5_ar.js"></script>
+
+		<!-- P5 Sketch -->
+		<script language="javascript" type="text/javascript" src="sketch.js"></script>
+
+		<!-- Custom Styles -->
+		<style type="text/css">
+			body {
+				margin: 0px;
+				overflow: hidden;
+			}
+
+      /* shows a warning message when the screen is rotated into portrait mode -- necessary to prevent issues on mobile devices */
+			@media screen and (orientation:portrait) {
+				#portrait_warning {
+					position: fixed;
+					top: 0px;
+					left: 0px;
+					width: 100%;
+					height: 100%;
+					text-align: center;
+					background: white;
+					z-index: 1000;
+					display: block;
+				}
+			}
+
+      /* hides the rotational warning when the screen is in landscape mode */
+			@media screen and (orientation:landscape) {
+				#portrait_warning {
+					display: none;
+				}
+			}
+		</style>
+
+	</head>
+
+	<body>
+
+		<!-- modal box to tell the user to rotate their device into landscape mode - the AR toolkit only reliably renders in landscape mode -->
+        
+		<div id="portrait_warning">
+			<h1>Rotate your device into landscape mode!</h1>
+		</div>
+
+		<!-- Define A-Frame VR Scene and set it up so that it will be manipulated through AR.js -->
+		<a-scene id="ARScene" embedded arjs='sourceType: webcam; debugUIEnabled: false; detectionMode: mono;'>
+            
+            <a-asset id='ocean' src='assets/water/water.jpg'></a-asset>
+            <a-asset id='jelly_obj' src='assets/water/jelly/model.obj'></a-asset>
+			<a-asset id='jelly_mtl' src='assets/water/jelly/materials.mtl'></a-asset>
+            
+            <a-asset id='fish_obj' src='assets/water/fish/Mesh_Goldfish.obj'></a-asset>
+			<a-asset id='fish_mtl' src='assets/water/fish/Mesh_Goldfish.mtl'></a-asset>
+            
+            <a-asset id='island_obj' src='assets/water/island/1220%20Island.obj'></a-asset>
+			<a-asset id='island_mtl' src='assets/water/island/1220%20Island.mtl'></a-asset>
+
+			<a-asset id='walrus_obj' src='assets/water/walrus/NOVELO_WALRUS.obj'></a-asset>
+			<a-asset id='walrus_mtl' src='assets/water/walrus/NOVELO_WALRUS.mtl'></a-asset>
+
+			<a-asset id='palm_tree_obj' src='assets/water/palm_tree/model.obj'></a-asset>
+			<a-asset id='palm_tree_mtl' src='assets/water/palm_tree/materials.mtl'></a-asset>
+	
+            <a-asset id='sun_obj' src='assets/water/sun/sun_02.obj'></a-asset>
+			<a-asset id='sun_mtl' src='assets/water/sun/sun_02.mtl'></a-asset>
+			
+			<img id="cactus" src="assets/desert/cactus/PUSHILIN_prickly_pear_cactus.png"/>
+			<a-asset id="cactus_obj" src="assets/desert/cactus/cactus.obj"></a-asset>
+			<a-asset id="cactus_mtl" src="assets/desert/cactus/cactus.mtl"></a-asset>
+
+			<img id="dland" src="assets/desert/landscape/desertSurface_Color.png"/>
+			<a-asset id="dland_obj" src="assets/desert/landscape/CUPIC_DESERT.obj"></a-asset>
+			<a-asset id="dland_mtl" src="assets/desert/landscape/CUPIC_DESERT.mtl"></a-asset>
+
+			<a-asset id="camel_obj" src="assets/desert/camel/NOVELO_CAMEL.obj"></a-asset>
+			<a-asset id="camel_mtl" src="assets/desert/camel/NOVELO_CAMEL.mtl"></a-asset>
+
+			<a-asset id="tumble_obj" src="assets/desert/tumbleweed/model.obj"></a-asset>
+			<a-asset id="tumble_mtl" src="assets/desert/tumbleweed/materials.mtl"></a-asset>
+
+			<a-asset id="tree_obj" src="assets/rainforest/trees/tree.obj"></a-asset>
+			<a-asset id="tree_mtl" src="assets/rainforest/trees/tree.mtl"></a-asset>
+
+			<a-asset id="parrot_obj" src="assets/rainforest/parrot/parrot.obj"></a-asset>
+			<a-asset id="parrot_mtl" src="assets/rainforest/parrot/parrot.mtl"></a-asset>
+			
+			<a-asset id="rain_obj" src="assets/rainforest/rain/rain.obj"></a-asset>
+			<a-asset id="rain_mtl" src="assets/rainforest/rain/rain.mtl"></a-asset>
+
+			<img id="jaguar" src="assets/rainforest/jaguar/Jaguar_BaseColor.png"/>
+			<a-asset id="jaguar_obj" src="assets/rainforest/jaguar/Jaguar.obj"></a-asset>
+			<a-asset id="jaguar_mtl" src="assets/rainforest/jaguar/Jaguar.mtl"></a-asset>
+
+			<img id="venus" src="assets/rainforest/venus/VenusFlyTrap_BaseColor.png"/>
+			<a-asset id="venus_obj" src="assets/rainforest/venus/VenusFlyTrap.obj"></a-asset>
+			<a-asset id="venus_mtl" src="assets/rainforest/venus/VenusFlyTrap.mtl"></a-asset>
+
+			<a-asset id="mountain_obj" src="assets/mountain/mountain/model.obj"></a-asset>
+			<a-asset id="mountain_mtl" src="assets/mountain/mountain/materials.mtl"></a-asset>
+
+			<img id="bear" src="assets/mountain/bear/BlackBear_BaseColor.png"/>
+			<a-asset id="bear_obj" src="assets/mountain/bear/BlackBear.obj"></a-asset>
+			<a-asset id="bear_mtl" src="assets/mountain/bear/BlackBear.mtl"></a-asset>
+
+			<a-asset id="pinetree_obj" src="assets/mountain/pinetree/model.obj"></a-asset>
+			<a-asset id="pinetree_mtl" src="assets/mountain/pinetree/materials.mtl"></a-asset>
+
+			<a-asset id="cloud_obj" src="assets/mountain/cloud/model.obj"></a-asset>
+			<a-asset id="cloud_mtl" src="assets/mountain/cloud/materials.mtl"></a-asset>
+
+			<a-asset id="hawk_obj" src="assets/mountain/hawk/Bird_01.obj"></a-asset>
+			<a-asset id="hawk_mtl" src="assets/mountain/hawk/Bird_01.mtl"></a-asset>
+
+
+
+			<!-- set up all of the AR markers we will be working with along with links to their 'pattern' files -->
+			<!-- note that we aren't putting any geometry inside of marker here - we will do that in the p5 sketch -->
+			<a-marker id="hiro" preset="custom" url="./markers/patt.hiro"></a-marker>
+			<a-marker id="zb" preset="custom" url="./markers/patt.zb"></a-marker>
+            <a-marker id="kanji" preset="custom" url="./markers/patt.kanji"></a-marker>
+            <a-marker id ="nyu" preset="custom" url="./markers/nyu.patt"></a-marker>
+
+			<a-entity camera></a-entity>
+		</a-scene>
+
+
+
+	</body>
+</html>
